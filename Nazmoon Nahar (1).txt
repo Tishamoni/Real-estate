@@ -1,0 +1,159 @@
+-- Create Admin table
+CREATE TABLE Admin (
+  ID INT NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(255) NOT NULL,
+  Contact VARCHAR(255) NOT NULL,
+  Address VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Username VARCHAR(255) NOT NULL,
+  Password VARCHAR(255) NOT NULL,
+  PRIMARY KEY (ID)
+);
+
+-- Create PropertyType table
+CREATE TABLE PropertyType (
+  ID INT NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(255) NOT NULL,
+  Description VARCHAR(255) NOT NULL,
+  AdminID INT NOT NULL,
+  FOREIGN KEY (AdminID) REFERENCES Admin (ID),
+  PRIMARY KEY (ID)
+);
+
+-- Create Agent table
+CREATE TABLE Agent (
+  ID INT NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(255) NOT NULL,
+  Contact VARCHAR(255) NOT NULL,
+  Address VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Image VARCHAR(255) NOT NULL,
+  AgentFBAccount VARCHAR(255) NOT NULL,
+  Username VARCHAR(255) NOT NULL,
+  Password VARCHAR(255) NOT NULL,
+  PRIMARY KEY (ID)
+);
+
+-- Create Client table
+CREATE TABLE Client (
+  ID INT NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(255) NOT NULL,
+  Contact VARCHAR(255) NOT NULL,
+  Address VARCHAR(255) NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Image VARCHAR(255) NOT NULL,
+  ClientFBAccount VARCHAR(255) NOT NULL,
+  Username VARCHAR(255) NOT NULL,
+  Password VARCHAR(255) NOT NULL,
+  PRIMARY KEY (ID)
+);
+
+-- Create Property table
+CREATE TABLE Property (
+  ID INT NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(255) NOT NULL,
+  Description VARCHAR(255) NOT NULL,
+  Price INT NOT NULL,
+  PropertyTypeID INT NOT NULL,
+  AgentID INT NOT NULL,
+  Status VARCHAR(255) NOT NULL,
+  FOREIGN KEY (PropertyTypeID) REFERENCES PropertyType (ID),
+  FOREIGN KEY (AgentID) REFERENCES Agent (ID),
+  PRIMARY KEY (ID)
+);
+
+-- Create PropertyImage table
+CREATE TABLE PropertyImage (
+  ID INT NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(255) NOT NULL,
+  Description VARCHAR(255) NOT NULL,
+  PropertyID INT NOT NULL,
+  FOREIGN KEY (PropertyID) REFERENCES Property (ID),
+  PRIMARY KEY (ID)
+);
+
+-- Create Notification table
+CREATE TABLE Notification (
+  ID INT NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(255) NOT NULL,
+  Description VARCHAR(255) NOT NULL,
+  AdminID INT NOT NULL,
+  FOREIGN KEY (AdminID) REFERENCES Admin (ID),
+  PRIMARY KEY (ID)
+);
+
+-- Create Comment table
+CREATE TABLE Comment (
+  ID INT NOT NULL AUTO_INCREMENT,
+  Name VARCHAR(255) NOT NULL,
+  Description VARCHAR(255) NOT NULL,
+  AdminID INT NOT NULL,
+  FOREIGN KEY (AdminID) REFERENCES Admin (ID),
+  PRIMARY KEY (ID)
+);
+
+-- Create Appointment table
+CREATE TABLE Appointment (
+  ID INT NOT NULL AUTO_INCREMENT,
+  Description VARCHAR(255) NOT NULL,
+  Date DATE NOT NULL,
+  ClientID INT NOT NULL,
+  AgentID INT NOT NULL,
+  AdminID INT NOT NULL,
+  Status VARCHAR(255) NOT NULL,
+  FOREIGN KEY (ClientID) REFERENCES Client (ID),
+  FOREIGN KEY (AgentID) REFERENCES Agent (ID),
+  FOREIGN KEY (AdminID) REFERENCES Admin (ID),
+  PRIMARY KEY (ID)
+);
+
+
+
+
+
+
+
+-- Insert sample data into Admin table
+INSERT INTO Admin (Name, Contact, Address, Email, Username, Password) VALUES
+  ('Tisha', '1234567890', '123 Main Street', 'nntisha@gmail.com', 'Tishamoni', 'password123');
+
+-- Insert sample data into PropertyType table
+INSERT INTO PropertyType (Name, Description, AdminID) VALUES
+  ('House', 'Residential property', 1),
+  ('Apartment', 'Multi-unit building', 1);
+
+-- Insert sample data into Agent table
+INSERT INTO Agent (Name, Contact, Address, Email, Image, AgentFBAccount, Username, Password) VALUES
+  ('Pabel khan', '+1(267)6802196', '456 main Street', 'pabelkhan711@gmail.com', 'agent.jpg', 'pabelkhan_agent', 'Pkhan', 'agentpass123');
+
+-- Insert sample data into Client table
+INSERT INTO Client (Name, Contact, Address, Email, Image, ClientFBAccount, Username, Password) VALUES
+  ('Muhit Adnan', '0177219812', '789 truman Avenue', 'muhitadnan@gmail.com', 'client.jpg', 'Muhitadnan_client', 'MuhitAdnan', 'clientpass123');
+
+-- Insert sample data into Property table
+INSERT INTO Property (Name, Description, Price, PropertyTypeID, AgentID, Status) VALUES
+  ('Beautiful House', 'Spacious 4-bedroom house', 500000, 1, 1, 'Available'),
+  ('Luxury Apartment', 'Modern apartment with city views', 2000, 2, 1, 'Available');
+
+-- Insert sample data into PropertyImage table
+INSERT INTO PropertyImage (Name, Description, PropertyID) VALUES
+  ('image1.jpg', 'Front view of the house', 1),
+  ('image2.jpg', 'Living room', 1),
+  ('image3.jpg', 'Bedroom', 1),
+  ('image4.jpg', 'Apartment exterior', 2),
+  ('image5.jpg', 'Kitchen', 2);
+
+-- Insert sample data into Notification table
+INSERT INTO Notification (Name, Description, AdminID) VALUES
+  ('New Listing', 'A new property has been listed.', 1),
+  ('Appointment Reminder', 'Reminder for upcoming appointment.', 1);
+
+-- Insert sample data into Comment table
+INSERT INTO Comment (Name, Description, AdminID) VALUES
+  ('Good job!', 'Great work on the project.', 1),
+  ('Feedback', 'Some suggestions for improvement.', 1);
+
+-- Insert sample data into Appointment table
+INSERT INTO Appointment (Description, Date, ClientID, AgentID, AdminID, Status) VALUES
+  ('Property viewing', '2023-06-01', 1, 1, 1, 'Scheduled'),
+  ('Consultation meeting', '2023-06-05', 1, 1, 1, 'Scheduled');
